@@ -1,26 +1,33 @@
 version: '3'
 services:
   db:
-    image: postgres
-    environment:
-      POSTGRES_DB: dev
-      POSTGRES_USER: postgres-dev
-      POSTGRES_PASSWORD: s3cr3tp4ssw0rd
-    ports:
-      - 5432:5432
-  app:
-    build: .
-    command: ["./wait-for-it.sh", "db:5432", "--", "go", "run", "main.go"]
+    build: ./db
     volumes:
-      - .:/go/src/app
-    ports:
-      - "8080:8080"
+      - ./db/pgdata:/pgdata
     environment:
-      POSTGRES_HOST: db
-      POSTGRES_DB: dev
-      POSTGRES_USER: postgres-dev
-      POSTGRES_PASSWORD: s3cr3tp4ssw0rd
-    depends_on:
-      - db
+      POSTGRES_USER: docker
+      POSTGRES_PASSWORD: docker
+      PGDATA: /pgdata
+    ports:
+      - "5432"
+  api:
+    build:
+      context: ./api
+      args:
+        app_env: ${APP_ENV}
+    volumes:
+      - ./api:/go/src/github.com/user/GoDoRP/api
+    ports:
+      - "5000:8080"
     links:
       - db
+
+  frontend:
+    build:
+      context: ./frontend
+      args:
+        app_env: ${APP_ENV}
+    volumes:
+      - ./frontend/src:/frontend/src
+    ports:
+      - "3000:3000"
