@@ -43,7 +43,7 @@ install:
 
 test:
 	cd accountservice
-	go test -v
+	go test -v ./...
 
 travis:
 	$(HOME)/gopath/bin/goveralls -service=travis-ci
