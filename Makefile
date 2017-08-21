@@ -42,6 +42,7 @@ install:
 # 	ls release
 
 test:
+	cd accountservice
 	go test -v
 
 travis:
