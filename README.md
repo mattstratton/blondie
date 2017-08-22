@@ -1,3 +1,4 @@
+[![Stories in Ready](https://badge.waffle.io/mattstratton/blondie.png?label=ready&title=Ready)](https://waffle.io/mattstratton/blondie?utm_source=badge)
 # blondie
 
 `blondie` is a web application for submitting and reviewing talks, built with :heart: by [mattstratton](https://github.com/mattstratton) in [Go](https://golang.org/).
