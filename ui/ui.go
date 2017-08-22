@@ -77,8 +77,3 @@ func peopleHandler(m *model.Model) http.Handler {
 		fmt.Fprintf(w, string(js))
 	})
 }
-
-func getPeople(w http.ResponseWriter, r *http.Request) {
-	&people, err := *model.Model.People()
-
-}
