@@ -1,4 +1,4 @@
-package service
+package ui
 
 import (
 	"github.com/gorilla/mux"
