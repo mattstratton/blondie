@@ -18,3 +18,4 @@ yarn-error.log*
 .DS_Store
 .env
 /accountservice/accountservice-linux-amd64
+/accounts/tmp
