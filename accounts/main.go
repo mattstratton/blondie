@@ -2,32 +2,36 @@ package main
 
 import (
 	"encoding/json"
+	"fmt"
 	"log"
 	"net/http"
 	"time"
 
 	"github.com/gorilla/context"
+	"github.com/mattstratton/blondie/accounts/service"
 
 	mgo "gopkg.in/mgo.v2"
 	"gopkg.in/mgo.v2/bson"
 )
 
+var appName = "accountservice"
+
 func main() {
 
+	fmt.Printf("Starting %v\n", appName)
+
 	// connect to db
-	db, err := mgo.Dial("db")
+	db, err := mgo.Dial("db") //TODO: Set this in an environment file
 	if err != nil {
 		log.Fatal("cannot dial mongo - ", err)
 	}
 	defer db.Close() //clean up when done
 
-	h := Adapt(http.HandlerFunc(handle), withDB(db))
+	// h := Adapt(http.HandlerFunc(handle), withDB(db))
+	//
+	// http.Handle("/accounts", context.ClearHandler(h))
 
-	http.Handle("/accounts", context.ClearHandler(h)) //TODO: This should handle the slash and not accounts
-
-	if err := http.ListenAndServe(":8080", nil); err != nil {
-		log.Fatal(err)
-	}
+	service.StartWebServer("8080")
 
 }
 
