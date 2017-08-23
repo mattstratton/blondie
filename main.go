@@ -1,39 +1,19 @@
 package main
 
 import (
-	"flag"
+	"fmt"
 	"log"
 	"net/http"
-
-	"github.com/mattstratton/blondie/daemon"
 )
 
-var assetsPath string
-
-func processFlags() *daemon.Config {
-	cfg := &daemon.Config{}
-
-	flag.StringVar(&cfg.ListenSpec, "listen", "localhost:3000", "HTTP listen spec")
-	// flag.StringVar(&cfg.Db.ConnectString, "db-connect", "host=/var/run/postgresql dbname=gowebapp sslmode=disable", "DB Connect String")
-	flag.StringVar(&cfg.Db.ConnectString, "db-connect", "host=localhost port=32768 dbname=docker user=docker password=docker sslmode=disable", "DB Connect String")
-
-	flag.StringVar(&assetsPath, "assets-path", "assets", "Path to assets dir")
-
-	flag.Parse()
-	return cfg
-}
-
-func setupHTTPAssets(cfg *daemon.Config) {
-	log.Printf("Assets served from %q.", assetsPath)
-	cfg.UI.Assets = http.Dir(assetsPath)
+func sayHelloName(w http.ResponseWriter, r *http.Request) {
+	fmt.Fprintf(w, "Hello, World!")
 }
 
 func main() {
-	cfg := processFlags()
-
-	setupHTTPAssets(cfg)
-
-	if err := daemon.Run(cfg); err != nil {
-		log.Printf("Error in main(): %v", err)
+	http.HandleFunc("/", sayHelloName)
+	err := http.ListenAndServe(":9090", nil)
+	if err != nil {
+		log.Fatal("ListenAndServe: ", err)
 	}
 }

@@ -1,0 +1,20 @@
+version: '2'
+services:
+  accounts:
+    build: ./accounts
+    image: blondie/accounts
+    container_name: blondie-accounts
+    depends_on:
+      - db
+    links:
+      - db
+    ports:
+      - "8080:8080"
+
+  db:
+    image: mongo:3.3
+    container_name: blondie-db
+    ports:
+      - "27017:27017"
+    volumes:
+      - ./backup:/backup:rw
