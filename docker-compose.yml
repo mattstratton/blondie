@@ -11,7 +11,7 @@ services:
     ports:
       - "8080:8080"
     volumes:
-      - ./accounts:/go/src/app
+      - ./accounts:/go/src/github.com/mattstratton/blondie/accounts
 
   db:
     image: mongo:3.3
