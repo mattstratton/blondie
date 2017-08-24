@@ -13,6 +13,45 @@ services:
     volumes:
       - ./accounts:/go/src/github.com/mattstratton/blondie/accounts
 
+  events:
+    build: ./events
+    image: blondie/events
+    container_name: blondie-events
+    depends_on:
+      - db
+    links:
+      - db
+    ports:
+      - "8081:8081"
+    volumes:
+      - ./events:/go/src/github.com/mattstratton/blondie/events
+
+  speakers:
+    build: ./speakers
+    image: blondie/speakers
+    container_name: blondie-speakers
+    depends_on:
+      - db
+    links:
+      - db
+    ports:
+      - "8082:8082"
+    volumes:
+      - ./speakers:/go/src/github.com/mattstratton/blondie/speakers
+
+  talks:
+    build: ./talks
+    image: blondie/talks
+    container_name: blondie-talks
+    depends_on:
+      - db
+    links:
+      - db
+    ports:
+      - "8083:8083"
+    volumes:
+      - ./talks:/go/src/github.com/mattstratton/blondie/talks
+
   db:
     image: mongo:3.3
     container_name: blondie-db

@@ -1,21 +1,25 @@
 # golang image where workspace (GOPATH) configured at /go.
 FROM golang:1.8
 
-# Install dependencies
-RUN go get gopkg.in/mgo.v2
-RUN go get github.com/gorilla/mux
+ARG app_env
+ENV APP_ENV $APP_ENV
 
 # copy the local package files to the container workspace
-ADD . /go/src/github.com/mattstratton/blondie/events
+COPY . /go/src/github.com/mattstratton/blondie/events
 
 # Setting up working directory
 WORKDIR /go/src/github.com/mattstratton/blondie/events
 
-# Build the events command inside the container.
-RUN go install github.com/mattstratton/blondie/events
+# Install dependencies
+RUN go get ./...
 
-# Run the events microservice when the container starts.
-ENTRYPOINT /go/bin/events
+CMD if [ ${APP_ENV} = production ]; \
+	then \
+	events; \
+	else \
+	go get github.com/pilu/fresh && \
+	fresh; \
+	fi
 
-# Service listens on port 8080.
-EXPOSE 8080
+# Service listens on port 8081.
+EXPOSE 8081

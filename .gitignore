@@ -19,3 +19,6 @@ yarn-error.log*
 .env
 /accountservice/accountservice-linux-amd64
 /accounts/tmp
+/events/tmp
+/speakers/tmp
+/talks/tmp
