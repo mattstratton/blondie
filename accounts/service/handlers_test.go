@@ -26,9 +26,11 @@ func TestGetAccount(t *testing.T) {
 
 			Convey("Then the response should be a 200", func() {
 				So(resp.Code, ShouldEqual, 200)
+				// So(resp.Body, ShouldEqual, "hi")
 
 				// account := model.Account{}
 				// json.Unmarshal(resp.Body.Bytes(), &account)
+				// So(account, ShouldEqual, "hi")
 				// So(account.ID, ShouldEqual, "123")
 				// So(account.Username, ShouldEqual, "Person_123")
 			})
