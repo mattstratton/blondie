@@ -1,5 +1,23 @@
 version: '2'
 services:
+  web:
+    build: ./
+    image: blondie/blondie-web
+    container_name: blondie-web
+    depends_on:
+      - accounts
+      - events
+      - speakers
+      - talks
+    links:
+      - accounts
+      - events
+      - speakers
+      - talks
+    ports:
+      - "8001:8001"
+    volumes:
+      - ./:/go/src/github.com/mattstratton/blondie
   accounts:
     build: ./accounts
     image: blondie/accounts

@@ -59,8 +59,8 @@ func (mc *MongoClient) Seed() {
 func (mc *MongoClient) QueryAccount(accountID string) (model.Account, error) {
 	account := model.Account{}
 	// objectID := fmt.Sprintf("ObjectId(\"%v\")", account)
-	// objectID := bson.ObjectIdHex(accountID)
-	err := mc.mongoDB.DB("blondie").C("accounts").Find(bson.M{"_id": accountID}).One(&account)
+	objectID := bson.ObjectIdHex(accountID)
+	err := mc.mongoDB.DB("blondie").C("accounts").Find(bson.M{"_id": objectID}).One(&account)
 
 	if err != nil {
 		return model.Account{}, err
